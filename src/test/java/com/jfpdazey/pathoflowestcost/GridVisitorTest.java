@@ -3,6 +3,9 @@ package com.jfpdazey.pathoflowestcost;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
@@ -111,5 +114,24 @@ public class GridVisitorTest {
 
         subject.visit(grid);
         assertThat(subject.getCurrentColumn(), equalTo(1));
+    }
+
+    @Test
+    public void startsWithEmptyPath() {
+        assertThat(subject.getPath().size(), equalTo(0));
+    }
+
+    @Test
+    public void addsRowToPathAfterVisiting() {
+        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
+        List<Integer> expectedPath = new ArrayList<Integer>();
+
+        subject.visit(grid);
+        expectedPath.add(1);
+        assertThat(subject.getPath(), equalTo(expectedPath));
+
+        subject.visit(grid);
+        expectedPath.add(1);
+        assertThat(subject.getPath(), equalTo(expectedPath));
     }
 }
