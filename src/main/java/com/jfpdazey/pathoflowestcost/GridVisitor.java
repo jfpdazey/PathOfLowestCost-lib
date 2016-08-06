@@ -2,15 +2,15 @@ package com.jfpdazey.pathoflowestcost;
 
 public class GridVisitor {
 
-    private int score;
+    private int totalCost;
     private int currentColumn = 1;
 
-    public int getScore() {
-        return score;
+    public int getTotalCost() {
+        return totalCost;
     }
 
     public void visit(Grid grid) {
-        score += grid.getValueForColumn(currentColumn);
+        totalCost += grid.getValueForColumn(currentColumn);
         currentColumn++;
     }
 

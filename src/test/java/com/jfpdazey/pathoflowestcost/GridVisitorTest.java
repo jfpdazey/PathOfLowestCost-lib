@@ -9,34 +9,34 @@ import static org.junit.Assert.*;
 public class GridVisitorTest {
 
     @Test
-    public void startsOffWithNoScore() {
+    public void startsOffWithNoTotalCost() {
         GridVisitor subject = new GridVisitor();
-        assertThat(subject.getScore(), equalTo(0));
+        assertThat(subject.getTotalCost(), equalTo(0));
     }
 
     @Test
-    public void accumulatesScoreForOneRound() {
+    public void accumulatesTotalCostForOneRound() {
         GridVisitor subject = new GridVisitor();
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
 
         subject.visit(grid);
 
-        assertThat(subject.getScore(), equalTo(1));
+        assertThat(subject.getTotalCost(), equalTo(1));
     }
 
     @Test
-    public void accumulatesScoreForTwoRounds() {
+    public void accumulatesTotalCostForTwoRounds() {
         GridVisitor subject = new GridVisitor();
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
 
         subject.visit(grid);
         subject.visit(grid);
 
-        assertThat(subject.getScore(), equalTo(3));
+        assertThat(subject.getTotalCost(), equalTo(3));
     }
 
     @Test
-    public void accumulatesScoreAcrossEntireRow() {
+    public void accumulatesTotalCostAcrossEntireRow() {
         GridVisitor subject = new GridVisitor();
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
 
@@ -46,7 +46,7 @@ public class GridVisitorTest {
         subject.visit(grid);
         subject.visit(grid);
 
-        assertThat(subject.getScore(), equalTo(15));
+        assertThat(subject.getTotalCost(), equalTo(15));
     }
 
     @Test
