@@ -13,4 +13,8 @@ public class GridVisitor {
         score += grid.getValueForColumn(currentColumn);
         currentColumn++;
     }
+
+    public boolean canVisit(Grid grid) {
+        return currentColumn <= grid.getColumnCount();
+    }
 }

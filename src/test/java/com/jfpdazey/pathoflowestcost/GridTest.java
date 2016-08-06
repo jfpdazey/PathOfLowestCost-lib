@@ -27,4 +27,13 @@ public class GridTest {
         assertThat(subject.getValueForColumn(1), equalTo(1));
         assertThat(subject.getValueForColumn(3), equalTo(5));
     }
+
+    @Test
+    public void returnsColumnCount() {
+        Grid fiveColumnGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
+        Grid sevenColumnGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5, 6, 7 } });
+
+        assertThat(fiveColumnGrid.getColumnCount(), equalTo(5));
+        assertThat(sevenColumnGrid.getColumnCount(), equalTo(7));
+    }
 }

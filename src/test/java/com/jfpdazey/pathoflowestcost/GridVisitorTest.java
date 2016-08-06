@@ -3,6 +3,7 @@ package com.jfpdazey.pathoflowestcost;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
 
 public class GridVisitorTest {
@@ -16,7 +17,7 @@ public class GridVisitorTest {
     @Test
     public void accumulatesScoreForOneRound() {
         GridVisitor subject = new GridVisitor();
-        Grid grid = new Grid(new int[][]{{1, 2, 3, 4, 5}});
+        Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
 
         subject.visit(grid);
 
@@ -26,7 +27,7 @@ public class GridVisitorTest {
     @Test
     public void accumulatesScoreForTwoRounds() {
         GridVisitor subject = new GridVisitor();
-        Grid grid = new Grid(new int[][]{{1, 2, 3, 4, 5}});
+        Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
 
         subject.visit(grid);
         subject.visit(grid);
@@ -37,7 +38,7 @@ public class GridVisitorTest {
     @Test
     public void accumulatesScoreAcrossEntireRow() {
         GridVisitor subject = new GridVisitor();
-        Grid grid = new Grid(new int[][]{{1, 2, 3, 4, 5}});
+        Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
 
         subject.visit(grid);
         subject.visit(grid);
@@ -46,5 +47,30 @@ public class GridVisitorTest {
         subject.visit(grid);
 
         assertThat(subject.getScore(), equalTo(15));
+    }
+
+    @Test
+    public void knowsWhenThereAreMoreVisits() {
+        GridVisitor subject = new GridVisitor();
+        Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
+
+        subject.visit(grid);
+        subject.visit(grid);
+
+        assertThat(subject.canVisit(grid), is(true));
+    }
+
+    @Test
+    public void knowsWhenThereAreNoMoreVisits() {
+        GridVisitor subject = new GridVisitor();
+        Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
+
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+
+        assertThat(subject.canVisit(grid), is(false));
     }
 }

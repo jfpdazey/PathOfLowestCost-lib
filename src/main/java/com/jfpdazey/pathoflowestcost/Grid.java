@@ -16,4 +16,8 @@ public class Grid {
     public int getValueForColumn(int column) {
         return values[0][column - 1];
     }
+
+    public int getColumnCount() {
+        return values[0].length;
+    }
 }
