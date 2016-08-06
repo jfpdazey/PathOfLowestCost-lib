@@ -10,11 +10,15 @@ public class GridVisitor {
     }
 
     public void visit(Grid grid) {
-        totalCost += grid.getValueForColumn(currentColumn);
+        if (canVisit(grid)) {
+            totalCost += grid.getValueForColumn(currentColumn);
+        }
         currentColumn++;
     }
 
     public boolean canVisit(Grid grid) {
-        return currentColumn <= grid.getColumnCount();
+        return (currentColumn <= grid.getColumnCount())
+                && (totalCost < 50);
     }
+
 }

@@ -73,4 +73,28 @@ public class GridVisitorTest {
 
         assertThat(subject.canVisit(grid), is(false));
     }
+
+    @Test
+    public void cannotVisitFurtherWhenTotalCostIsFiftyOrMore() {
+        GridVisitor subject = new GridVisitor();
+        Grid grid = new Grid(new int[][]{ { 49, 1, 0, 0, 0 } });
+
+        subject.visit(grid);
+        assertThat(subject.canVisit(grid), is(true));
+
+        subject.visit(grid);
+        assertThat(subject.canVisit(grid), is(false));
+    }
+
+    @Test
+    public void furtherVisitsDoNotAccumulateCostWhenTotalCostIsFiftyOrMore() {
+        GridVisitor subject = new GridVisitor();
+        Grid grid = new Grid(new int[][]{ { 50, 1, 1, 1, 1 } });
+
+        subject.visit(grid);
+        assertThat(subject.getTotalCost(), equalTo(50));
+
+        subject.visit(grid);
+        assertThat(subject.getTotalCost(), equalTo(50));
+    }
 }
