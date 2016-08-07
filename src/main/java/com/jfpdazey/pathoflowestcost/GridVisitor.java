@@ -6,7 +6,6 @@ import java.util.List;
 public class GridVisitor {
 
     private Grid grid;
-    private PathState pathState;
 
     public GridVisitor(Grid grid) {
         if (grid == null) {
@@ -14,33 +13,32 @@ public class GridVisitor {
         }
 
         this.grid = grid;
-        this.pathState = new PathState(grid.getColumnCount());
     }
 
     public List<PathState> visitPathsForRow(int row) {
-        List<PathState> pathStates = new ArrayList<PathState>();
-        while(canVisitRow(row)) {
-            visitRow(row);
+        List<PathState> paths = new ArrayList<PathState>();
+        PathState path = new PathState(grid.getColumnCount());
+
+        while(canVisitRowOnPath(row, path)) {
+            visitRowOnPath(row, path);
         }
 
-        pathStates.add(this.pathState);
+        paths.add(path);
 
-        return pathStates;
+        return paths;
     }
 
-    private void visitRow(int row) {
-        if (canVisitRow(row)) {
-            int columnToVisit = pathState.getPathLength() + 1;
-            pathState.addRowWithCost(row, grid.getValueForRowAndColumn(row, columnToVisit));
-        }
+    private void visitRowOnPath(int row, PathState path) {
+        int columnToVisit = path.getPathLength() + 1;
+        path.addRowWithCost(row, grid.getValueForRowAndColumn(row, columnToVisit));
     }
 
-    private boolean canVisitRow(int row) {
-        return !pathState.isComplete() && !nextVisitWouldExceedMaximumCost(row);
+    private boolean canVisitRowOnPath(int row, PathState path) {
+        return !path.isComplete() && !nextVisitOnPathWouldExceedMaximumCost(row, path);
     }
 
-    private boolean nextVisitWouldExceedMaximumCost(int row) {
-        int nextColumn = pathState.getPathLength() + 1;
-        return (pathState.getTotalCost() + grid.getValueForRowAndColumn(row, nextColumn)) > PathState.MAXIMUM_COST;
+    private boolean nextVisitOnPathWouldExceedMaximumCost(int row, PathState path) {
+        int nextColumn = path.getPathLength() + 1;
+        return (path.getTotalCost() + grid.getValueForRowAndColumn(row, nextColumn)) > PathState.MAXIMUM_COST;
     }
 }
