@@ -3,6 +3,7 @@ package com.jfpdazey.pathoflowestcost;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.equalTo;
@@ -29,7 +30,7 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
+        subject.visitRow(1);
 
         assertThat(subject.getPathState().getTotalCost(), equalTo(1));
     }
@@ -39,8 +40,8 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
 
         assertThat(subject.getPathState().getTotalCost(), equalTo(3));
     }
@@ -50,11 +51,11 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
 
         assertThat(subject.getPathState().getTotalCost(), equalTo(15));
     }
@@ -64,10 +65,10 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
 
-        assertThat(subject.canVisit(), is(true));
+        assertThat(subject.canVisitRow(1), is(true));
     }
 
     @Test
@@ -75,13 +76,13 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
 
-        assertThat(subject.canVisit(), is(false));
+        assertThat(subject.canVisitRow(1), is(false));
     }
 
     @Test
@@ -89,7 +90,7 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { PathState.MAXIMUM_COST + 1, 0, 0, 0, 0 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        assertThat(subject.canVisit(), is(false));
+        assertThat(subject.canVisitRow(1), is(false));
     }
 
     @Test
@@ -97,11 +98,11 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { PathState.MAXIMUM_COST - 1, 1, 1, 0, 0 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        assertThat(subject.canVisit(), is(true));
+        subject.visitRow(1);
+        assertThat(subject.canVisitRow(1), is(true));
 
-        subject.visit();
-        assertThat(subject.canVisit(), is(false));
+        subject.visitRow(1);
+        assertThat(subject.canVisitRow(1), is(false));
     }
 
     @Test
@@ -109,7 +110,7 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { PathState.MAXIMUM_COST + 1, 1, 1, 0, 0 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
+        subject.visitRow(1);
         assertThat(subject.getPathState().getTotalCost(), equalTo(0));
     }
 
@@ -118,10 +119,10 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { PathState.MAXIMUM_COST, 1, 1, 1, 1 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
+        subject.visitRow(1);
         assertThat(subject.getPathState().getTotalCost(), equalTo(50));
 
-        subject.visit();
+        subject.visitRow(1);
         assertThat(subject.getPathState().getTotalCost(), equalTo(50));
     }
 
@@ -138,7 +139,7 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
+        subject.visitRow(1);
         assertThat(subject.getCurrentColumn(), equalTo(1));
     }
 
@@ -147,8 +148,8 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { PathState.MAXIMUM_COST, 1, 1, 1, 1 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
         assertThat(subject.getCurrentColumn(), equalTo(1));
     }
 
@@ -165,11 +166,11 @@ public class GridVisitorTest {
         GridVisitor subject = new GridVisitor(grid);
         List<Integer> expectedPath = new ArrayList<Integer>();
 
-        subject.visit();
+        subject.visitRow(1);
         expectedPath.add(1);
         assertThat(subject.getPathState().getRowsTraversed(), equalTo(expectedPath));
 
-        subject.visit();
+        subject.visitRow(1);
         expectedPath.add(1);
         assertThat(subject.getPathState().getRowsTraversed(), equalTo(expectedPath));
     }
@@ -187,11 +188,11 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 1, 1, 1, PathState.MAXIMUM_COST - 4 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
 
         assertThat(subject.getPathState().successful, is(true));
     }
@@ -201,10 +202,10 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
 
         assertThat(subject.getPathState().successful, is(false));
     }
@@ -214,12 +215,49 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 0, 0, 0, 0, PathState.MAXIMUM_COST + 1 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
-        subject.visit();
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
+        subject.visitRow(1);
 
         assertThat(subject.getPathState().successful, is(false));
+    }
+
+    @Test
+    public void visitsOtherRowsInGrid() {
+        Grid twoRowGrid = new Grid(new int[][]{
+            { 2, 2, 2, 2, 2 }, { 1, 1, 1, 1, 1 }
+        });
+        GridVisitor subject = new GridVisitor(twoRowGrid);
+        List<Integer> expectedPath = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 2, 2, 2, 2, 2 })
+        );
+
+        subject.visitRow(2);
+        subject.visitRow(2);
+        subject.visitRow(2);
+        subject.visitRow(2);
+        subject.visitRow(2);
+
+        assertThat(subject.getPathState().getTotalCost(), equalTo(5));
+        assertThat(subject.getPathState().getRowsTraversed(), equalTo(expectedPath));
+        assertThat(subject.getPathState().successful, is(true));
+    }
+
+    @Test
+    public void canVisitHandlesOtherRows() {
+        Grid grid = new Grid(new int[][]{
+            { 1, 1, 1, 1, 1 }, { PathState.MAXIMUM_COST - 1, 1, 1, 0, 0, 0 }
+        });
+        GridVisitor subject = new GridVisitor(grid);
+
+        assertThat(subject.canVisitRow(2), is(true));
+
+        subject.visitRow(2);
+        assertThat(subject.canVisitRow(2), is(true));
+
+        subject.visitRow(2);
+        assertThat(subject.canVisitRow(2), is(false));
     }
 }

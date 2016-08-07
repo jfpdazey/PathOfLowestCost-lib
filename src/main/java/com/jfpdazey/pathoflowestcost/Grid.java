@@ -11,10 +11,10 @@ public class Grid {
         }
 
         this.values = values;
-}
+    }
 
-    public int getValueForColumn(int column) {
-        return values[0][column - 1];
+    public int getValueForRowAndColumn(int row, int column) {
+        return values[row - 1][column - 1];
     }
 
     public int getColumnCount() {

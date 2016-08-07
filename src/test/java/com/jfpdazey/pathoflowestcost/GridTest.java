@@ -20,12 +20,12 @@ public class GridTest {
     }
 
     @Test
-    public void retrievesValueForColumn() {
-        int values[][] = new int[][]{ { 1, 3, 5, 7, 9 } };
+    public void retrievesValueForRowAndColumn() {
+        int values[][] = new int[][]{ { 1, 3, 5, 7, 9 }, { 2, 4, 6, 8, 10 } };
         Grid subject = new Grid(values);
 
-        assertThat(subject.getValueForColumn(1), equalTo(1));
-        assertThat(subject.getValueForColumn(3), equalTo(5));
+        assertThat(subject.getValueForRowAndColumn(2, 1), equalTo(2));
+        assertThat(subject.getValueForRowAndColumn(1, 5), equalTo(9));
     }
 
     @Test

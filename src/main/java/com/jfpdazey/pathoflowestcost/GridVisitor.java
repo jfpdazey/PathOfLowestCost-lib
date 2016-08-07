@@ -21,23 +21,23 @@ public class GridVisitor {
 
     public PathState getPathState() { return pathState; }
 
-    public void visit() {
-        if (canVisit()) {
+    public void visitRow(int row) {
+        if (canVisitRow(row)) {
             currentColumn++;
-            pathState.addRow(1, grid.getValueForColumn(currentColumn));
+            pathState.addRow(row, grid.getValueForRowAndColumn(row, currentColumn));
             pathState.successful = isSuccessful();
         }
     }
 
-    public boolean canVisit() {
-        return (currentColumn < grid.getColumnCount()) && !nextVisitWouldExceedMaximumCost();
+    public boolean canVisitRow(int row) {
+        return (currentColumn < grid.getColumnCount()) && !nextVisitWouldExceedMaximumCost(row);
     }
 
-    public boolean isSuccessful() {
+    private boolean nextVisitWouldExceedMaximumCost(int row) {
+        return (pathState.getTotalCost() + grid.getValueForRowAndColumn(row, currentColumn + 1)) > PathState.MAXIMUM_COST;
+    }
+
+    private boolean isSuccessful() {
         return (pathState.getRowsTraversed().size() == grid.getColumnCount()) && !pathState.isOverCost();
-    }
-
-    private boolean nextVisitWouldExceedMaximumCost() {
-        return (pathState.getTotalCost() + grid.getValueForColumn(currentColumn + 1)) > PathState.MAXIMUM_COST;
     }
 }
