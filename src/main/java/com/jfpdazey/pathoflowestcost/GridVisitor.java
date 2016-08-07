@@ -19,13 +19,17 @@ public class GridVisitor {
     public void visitRow(int row) {
         if (canVisitRow(row)) {
             int column = pathState.getPathLength() + 1;
-            pathState.addRow(row, grid.getValueForRowAndColumn(row, column));
+            pathState.addRowWithCost(row, grid.getValueForRowAndColumn(row, column));
             pathState.successful = isSuccessful();
         }
     }
 
     public boolean canVisitRow(int row) {
-        return (pathState.getPathLength() < grid.getColumnCount()) && !nextVisitWouldExceedMaximumCost(row);
+        return !pathIsComplete() && !nextVisitWouldExceedMaximumCost(row);
+    }
+
+    private boolean pathIsComplete() {
+        return pathState.getPathLength() == grid.getColumnCount();
     }
 
     private boolean nextVisitWouldExceedMaximumCost(int row) {
@@ -34,6 +38,6 @@ public class GridVisitor {
     }
 
     private boolean isSuccessful() {
-        return (pathState.getPathLength() == grid.getColumnCount()) && !pathState.isOverCost();
+        return pathIsComplete() && !pathState.isOverCost();
     }
 }

@@ -44,41 +44,41 @@ public class PathStateTest {
         List<Integer> expectedRows = new ArrayList<Integer>();
 
         expectedRows.add(1);
-        subject.addRow(1, 0);
+        subject.addRowWithCost(1, 0);
         assertThat(subject.getRowsTraversed(), equalTo(expectedRows));
 
         expectedRows.add(10);
-        subject.addRow(10, 0);
+        subject.addRowWithCost(10, 0);
         assertThat(subject.getRowsTraversed(), equalTo(expectedRows));
     }
 
     @Test
     public void returnsCostForRowsAdded() {
-        subject.addRow(1, 2);
+        subject.addRowWithCost(1, 2);
         assertThat(subject.getTotalCost(), equalTo(2));
 
-        subject.addRow(1, 10);
+        subject.addRowWithCost(1, 10);
         assertThat(subject.getTotalCost(), equalTo(12));
     }
 
     @Test
     public void isOverCostIfCostExceedsMaximum() {
-        subject.addRow(1, PathState.MAXIMUM_COST + 1);
+        subject.addRowWithCost(1, PathState.MAXIMUM_COST + 1);
         assertThat(subject.isOverCost(), is(true));
     }
 
     @Test
     public void isNotOverCostIfCostDoesNotExceedMaximum() {
-        subject.addRow(1, PathState.MAXIMUM_COST);
+        subject.addRowWithCost(1, PathState.MAXIMUM_COST);
         assertThat(subject.isOverCost(), is(false));
     }
 
     @Test
     public void returnsPathLengthAfterAddingRows() {
-        subject.addRow(2, 1);
+        subject.addRowWithCost(2, 1);
         assertThat(subject.getPathLength(), equalTo(1));
 
-        subject.addRow(1, 10);
+        subject.addRowWithCost(1, 10);
         assertThat(subject.getPathLength(), equalTo(2));
     }
 }

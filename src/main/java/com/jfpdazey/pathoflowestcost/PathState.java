@@ -23,7 +23,7 @@ public class PathState {
         return rowsTraversed.size();
     }
 
-    public void addRow(int row, int cost) {
+    public void addRowWithCost(int row, int cost) {
         rowsTraversed.add(row);
         totalCost += cost;
     }
