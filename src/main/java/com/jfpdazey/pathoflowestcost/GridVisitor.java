@@ -10,7 +10,8 @@ public class GridVisitor {
     private Grid grid;
     private int totalCost;
     private int currentColumn;
-    private List<Integer> path = new ArrayList<Integer>();
+    private List<Integer> path;
+    private PathState pathState;
 
     public GridVisitor(Grid grid) {
         if (grid == null) {
@@ -18,6 +19,8 @@ public class GridVisitor {
         }
 
         this.grid = grid;
+        this.path = new ArrayList<Integer>();
+        this.pathState = new PathState();
     }
 
     public int getTotalCost() {
@@ -32,11 +35,15 @@ public class GridVisitor {
         return path;
     }
 
+    public PathState getPathState() { return pathState; }
+
     public void visit() {
         if (canVisit()) {
             currentColumn++;
             totalCost += grid.getValueForColumn(currentColumn);
             path.add(1);
+            pathState.addRow(1, grid.getValueForColumn(currentColumn));
+            pathState.successful = isSuccessful();
         }
     }
 

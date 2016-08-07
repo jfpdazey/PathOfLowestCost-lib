@@ -21,7 +21,7 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        assertThat(subject.getTotalCost(), equalTo(0));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(0));
     }
 
     @Test
@@ -31,7 +31,7 @@ public class GridVisitorTest {
 
         subject.visit();
 
-        assertThat(subject.getTotalCost(), equalTo(1));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(1));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class GridVisitorTest {
         subject.visit();
         subject.visit();
 
-        assertThat(subject.getTotalCost(), equalTo(3));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(3));
     }
 
     @Test
@@ -56,7 +56,7 @@ public class GridVisitorTest {
         subject.visit();
         subject.visit();
 
-        assertThat(subject.getTotalCost(), equalTo(15));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(15));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class GridVisitorTest {
         GridVisitor subject = new GridVisitor(grid);
 
         subject.visit();
-        assertThat(subject.getTotalCost(), equalTo(0));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(0));
     }
 
     @Test
@@ -119,10 +119,10 @@ public class GridVisitorTest {
         GridVisitor subject = new GridVisitor(grid);
 
         subject.visit();
-        assertThat(subject.getTotalCost(), equalTo(50));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(50));
 
         subject.visit();
-        assertThat(subject.getTotalCost(), equalTo(50));
+        assertThat(subject.getPathState().getTotalCost(), equalTo(50));
     }
 
     @Test
@@ -156,7 +156,7 @@ public class GridVisitorTest {
     public void startsWithEmptyPath() {
         Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
         GridVisitor subject = new GridVisitor(grid);
-        assertThat(subject.getPath().size(), equalTo(0));
+        assertThat(subject.getPathState().getRowsTraversed().size(), equalTo(0));
     }
 
     @Test
@@ -167,11 +167,11 @@ public class GridVisitorTest {
 
         subject.visit();
         expectedPath.add(1);
-        assertThat(subject.getPath(), equalTo(expectedPath));
+        assertThat(subject.getPathState().getRowsTraversed(), equalTo(expectedPath));
 
         subject.visit();
         expectedPath.add(1);
-        assertThat(subject.getPath(), equalTo(expectedPath));
+        assertThat(subject.getPathState().getRowsTraversed(), equalTo(expectedPath));
     }
 
     @Test
@@ -179,11 +179,11 @@ public class GridVisitorTest {
         Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
         GridVisitor subject = new GridVisitor(grid);
 
-        assertThat(subject.isSuccessful(), is(false));
+        assertThat(subject.getPathState().successful, is(false));
     }
 
     @Test
-    public void isSuccessfulIfGridIsCompletelyTraversed() {
+    public void pathIsSuccessfulIfGridIsCompletelyTraversed() {
         Grid grid = new Grid(new int[][]{ { 1, 1, 1, 1, GridVisitor.MAXIMUM_COST - 4 } });
         GridVisitor subject = new GridVisitor(grid);
 
@@ -193,7 +193,7 @@ public class GridVisitorTest {
         subject.visit();
         subject.visit();
 
-        assertThat(subject.isSuccessful(), is(true));
+        assertThat(subject.getPathState().successful, is(true));
     }
 
     @Test
@@ -206,11 +206,11 @@ public class GridVisitorTest {
         subject.visit();
         subject.visit();
 
-        assertThat(subject.isSuccessful(), is(false));
+        assertThat(subject.getPathState().successful, is(false));
     }
 
     @Test
-    public void isNotSuccessfulIfLastVisitCausesTotalCostToExceedMaximumCost() {
+    public void pathIsNotSuccessfulIfLastVisitCausesTotalCostToExceedMaximumCost() {
         Grid grid = new Grid(new int[][]{ { 0, 0, 0, 0, GridVisitor.MAXIMUM_COST + 1 } });
         GridVisitor subject = new GridVisitor(grid);
 
@@ -220,6 +220,6 @@ public class GridVisitorTest {
         subject.visit();
         subject.visit();
 
-        assertThat(subject.isSuccessful(), is(false));
+        assertThat(subject.getPathState().successful, is(false));
     }
 }
