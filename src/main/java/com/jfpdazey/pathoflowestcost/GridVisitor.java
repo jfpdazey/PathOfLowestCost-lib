@@ -11,7 +11,7 @@ public class GridVisitor {
         }
 
         this.grid = grid;
-        this.pathState = new PathState();
+        this.pathState = new PathState(grid.getColumnCount());
     }
 
     public PathState visitPathForRow(int row) {
@@ -31,11 +31,7 @@ public class GridVisitor {
     }
 
     private boolean canVisitRow(int row) {
-        return !pathIsComplete() && !nextVisitWouldExceedMaximumCost(row);
-    }
-
-    private boolean pathIsComplete() {
-        return pathState.getPathLength() == grid.getColumnCount();
+        return !pathState.isComplete() && !nextVisitWouldExceedMaximumCost(row);
     }
 
     private boolean nextVisitWouldExceedMaximumCost(int row) {
@@ -44,6 +40,6 @@ public class GridVisitor {
     }
 
     private boolean isSuccessful() {
-        return pathIsComplete() && !pathState.isOverCost();
+        return pathState.isComplete() && !pathState.isOverCost();
     }
 }

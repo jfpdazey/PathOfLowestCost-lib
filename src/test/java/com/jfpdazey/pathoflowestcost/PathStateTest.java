@@ -16,7 +16,7 @@ public class PathStateTest {
 
     @Before
     public void setUp() {
-        subject = new PathState();
+        subject = new PathState(2);
     }
 
     @Test
@@ -39,6 +39,10 @@ public class PathStateTest {
         assertThat(subject.getPathLength(), equalTo(0));
     }
 
+    @Test
+    public void beginsIncomplete() {
+        assertThat(subject.isComplete(), is(false));
+    }
     @Test
     public void returnsRowsAdded() {
         List<Integer> expectedRows = new ArrayList<Integer>();
@@ -80,5 +84,14 @@ public class PathStateTest {
 
         subject.addRowWithCost(1, 10);
         assertThat(subject.getPathLength(), equalTo(2));
+    }
+
+    @Test
+    public void isCompleteIfPathLengthMatchesGridLength() {
+        subject.addRowWithCost(2, 1);
+        assertThat(subject.isComplete(), is(false));
+
+        subject.addRowWithCost(1, 10);
+        assertThat(subject.isComplete(), is(true));
     }
 }

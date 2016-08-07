@@ -10,6 +10,11 @@ public class PathState {
     public boolean successful = false;
     private List<Integer> rowsTraversed = new ArrayList<Integer>();
     private int totalCost = 0;
+    private int expectedLength = 0;
+
+    PathState(int expectedLength) {
+        this.expectedLength = expectedLength;
+    }
 
     public List<Integer> getRowsTraversed() {
         return rowsTraversed;
@@ -26,6 +31,10 @@ public class PathState {
     public void addRowWithCost(int row, int cost) {
         rowsTraversed.add(row);
         totalCost += cost;
+    }
+
+    public boolean isComplete() {
+        return rowsTraversed.size() == expectedLength;
     }
 
     public boolean isOverCost() {
