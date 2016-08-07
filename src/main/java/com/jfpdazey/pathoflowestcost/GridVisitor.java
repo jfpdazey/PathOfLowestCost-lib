@@ -16,6 +16,14 @@ public class GridVisitor {
 
     public PathState getPathState() { return pathState; }
 
+    public PathState visitPathForRow(int row) {
+        while(canVisitRow(row)) {
+            visitRow(row);
+        }
+
+        return pathState;
+    }
+
     public void visitRow(int row) {
         if (canVisitRow(row)) {
             int column = pathState.getPathLength() + 1;
