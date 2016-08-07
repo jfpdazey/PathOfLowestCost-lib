@@ -90,7 +90,7 @@ public class GridVisitorTest {
 
         PathState result = subject.visitPathForRow(1);
 
-        assertThat(result.successful, is(true));
+        assertThat(result.isSuccessful(), is(true));
     }
 
     @Test
@@ -100,7 +100,7 @@ public class GridVisitorTest {
 
         PathState result = subject.visitPathForRow(1);
 
-        assertThat(result.successful, is(false));
+        assertThat(result.isSuccessful(), is(false));
     }
 
     @Test
@@ -110,7 +110,7 @@ public class GridVisitorTest {
 
         PathState result = subject.visitPathForRow(1);
 
-        assertThat(result.successful, is(false));
+        assertThat(result.isSuccessful(), is(false));
     }
 
     @Test
@@ -120,7 +120,7 @@ public class GridVisitorTest {
 
         PathState result = subject.visitPathForRow(1);
 
-        assertThat(result.successful, is(false));
+        assertThat(result.isSuccessful(), is(false));
     }
 
     @Test
@@ -131,7 +131,7 @@ public class GridVisitorTest {
         PathState result = subject.visitPathForRow(1);
 
         assertThat(result.getTotalCost(), equalTo(-25));
-        assertThat(result.successful, is(true));
+        assertThat(result.isSuccessful(), is(true));
     }
 
     @Test
@@ -146,7 +146,7 @@ public class GridVisitorTest {
 
         assertThat(result.getTotalCost(), equalTo(15));
         assertThat(result.getRowsTraversed(), equalTo(expectedPath));
-        assertThat(result.successful, is(true));
+        assertThat(result.isSuccessful(), is(true));
     }
 
     @Test
@@ -161,6 +161,6 @@ public class GridVisitorTest {
 
         assertThat(result.getTotalCost(), equalTo(49));
         assertThat(result.getRowsTraversed(), equalTo(expectedPath));
-        assertThat(result.successful, is(false));
+        assertThat(result.isSuccessful(), is(false));
     }
 }

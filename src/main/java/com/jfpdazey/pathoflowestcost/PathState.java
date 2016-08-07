@@ -7,7 +7,6 @@ public class PathState {
 
     public static int MAXIMUM_COST = 50;
 
-    public boolean successful = false;
     private List<Integer> rowsTraversed = new ArrayList<Integer>();
     private int totalCost = 0;
     private int expectedLength = 0;
@@ -35,6 +34,10 @@ public class PathState {
 
     public boolean isComplete() {
         return rowsTraversed.size() == expectedLength;
+    }
+
+    public boolean isSuccessful() {
+        return isComplete() && !isOverCost();
     }
 
     public boolean isOverCost() {

@@ -31,7 +31,7 @@ public class PathStateTest {
 
     @Test
     public void beginsUnsuccessful() {
-        assertThat(subject.successful, is(false));
+        assertThat(subject.isSuccessful(), is(false));
     }
 
     @Test
@@ -43,6 +43,7 @@ public class PathStateTest {
     public void beginsIncomplete() {
         assertThat(subject.isComplete(), is(false));
     }
+
     @Test
     public void returnsRowsAdded() {
         List<Integer> expectedRows = new ArrayList<Integer>();
@@ -93,5 +94,21 @@ public class PathStateTest {
 
         subject.addRowWithCost(1, 10);
         assertThat(subject.isComplete(), is(true));
+    }
+
+    @Test
+    public void isSuccessfulIfCompleteAndCostDoesNotExceedMaximum() {
+        subject.addRowWithCost(1, PathState.MAXIMUM_COST - 1);
+        assertThat(subject.isSuccessful(), is(false));
+
+        subject.addRowWithCost(2, 1);
+        assertThat(subject.isSuccessful(), is(true));
+    }
+
+    @Test
+    public void isNotSuccessfulIfCompleteAndCostExceedsMaximum() {
+        subject.addRowWithCost(1, PathState.MAXIMUM_COST);
+        subject.addRowWithCost(2, 1);
+        assertThat(subject.isSuccessful(), is(false));
     }
 }
