@@ -16,25 +16,30 @@ public class GridVisitor {
     }
 
     public List<PathState> visitPathsForRow(int row) {
-        List<PathState> paths = new ArrayList<PathState>();
-        PathState path = new PathState(grid.getColumnCount());
+        PathState initialPath = new PathState(grid.getColumnCount());
+        return visitPathsForRow(row, initialPath);
+    }
 
-        while(canVisitRowOnPath(row, path)) {
+    private List<PathState> visitPathsForRow(int row, PathState path) {
+        List<PathState> paths = new ArrayList<PathState>();
+
+        if (canVisitRowOnPath(row, path)) {
             visitRowOnPath(row, path);
+            paths.addAll(visitPathsForRow(row, path));
+        } else {
+            paths.add(path);
         }
 
-        paths.add(path);
-
         return paths;
+    }
+
+    private boolean canVisitRowOnPath(int row, PathState path) {
+        return !path.isComplete() && !nextVisitOnPathWouldExceedMaximumCost(row, path);
     }
 
     private void visitRowOnPath(int row, PathState path) {
         int columnToVisit = path.getPathLength() + 1;
         path.addRowWithCost(row, grid.getValueForRowAndColumn(row, columnToVisit));
-    }
-
-    private boolean canVisitRowOnPath(int row, PathState path) {
-        return !path.isComplete() && !nextVisitOnPathWouldExceedMaximumCost(row, path);
     }
 
     private boolean nextVisitOnPathWouldExceedMaximumCost(int row, PathState path) {
