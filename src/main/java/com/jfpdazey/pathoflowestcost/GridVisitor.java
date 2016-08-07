@@ -1,5 +1,8 @@
 package com.jfpdazey.pathoflowestcost;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class GridVisitor {
 
     private Grid grid;
@@ -14,12 +17,15 @@ public class GridVisitor {
         this.pathState = new PathState(grid.getColumnCount());
     }
 
-    public PathState visitPathForRow(int row) {
+    public List<PathState> visitPathsForRow(int row) {
+        List<PathState> pathStates = new ArrayList<PathState>();
         while(canVisitRow(row)) {
             visitRow(row);
         }
 
-        return pathState;
+        pathStates.add(this.pathState);
+
+        return pathStates;
     }
 
     private void visitRow(int row) {
