@@ -5,6 +5,8 @@ import java.util.List;
 
 public class GridVisitor {
 
+    public static int MAXIMUM_COST = 50;
+
     private int totalCost;
     private int currentColumn;
     private List<Integer> path = new ArrayList<Integer>();
@@ -27,7 +29,7 @@ public class GridVisitor {
 
     public boolean canVisit(Grid grid) {
         return (currentColumn < grid.getColumnCount())
-                && (totalCost < 50);
+                && (totalCost + grid.getValueForColumn(currentColumn + 1) <= MAXIMUM_COST);
     }
 
     public List<Integer> getPath() {
@@ -36,6 +38,6 @@ public class GridVisitor {
 
     public boolean isSuccessful(Grid grid) {
         return (path.size() == grid.getColumnCount())
-                && (totalCost < 50);
+                && (totalCost <= MAXIMUM_COST);
     }
 }

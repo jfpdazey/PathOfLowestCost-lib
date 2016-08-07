@@ -80,8 +80,15 @@ public class GridVisitorTest {
     }
 
     @Test
-    public void cannotVisitFurtherWhenTotalCostIsFiftyOrMore() {
-        Grid grid = new Grid(new int[][]{ { 49, 1, 0, 0, 0 } });
+    public void cannotVisitAtAllWhenFirstVisitCostWouldExceedMaximum() {
+        Grid grid = new Grid(new int[][]{ { GridVisitor.MAXIMUM_COST + 1, 0, 0, 0, 0 } });
+
+        assertThat(subject.canVisit(grid), is(false));
+    }
+
+    @Test
+    public void cannotVisitFurtherWhenTotalCostWouldExceedMaximum() {
+        Grid grid = new Grid(new int[][]{ { GridVisitor.MAXIMUM_COST - 1, 1, 1, 0, 0 } });
 
         subject.visit(grid);
         assertThat(subject.canVisit(grid), is(true));
@@ -91,8 +98,16 @@ public class GridVisitorTest {
     }
 
     @Test
-    public void furtherVisitsDoNotAccumulateCostWhenTotalCostIsFiftyOrMore() {
-        Grid grid = new Grid(new int[][]{ { 50, 1, 1, 1, 1 } });
+    public void firstVisitDoesNotAccumumlateCostIfItExceedsMaximum() {
+        Grid grid = new Grid(new int[][]{ { GridVisitor.MAXIMUM_COST + 1, 1, 1, 0, 0 } });
+
+        subject.visit(grid);
+        assertThat(subject.getTotalCost(), equalTo(0));
+    }
+
+    @Test
+    public void furtherVisitsDoNotAccumulateCostWhenTotalCostExceedsMaximum() {
+        Grid grid = new Grid(new int[][]{ { GridVisitor.MAXIMUM_COST, 1, 1, 1, 1 } });
 
         subject.visit(grid);
         assertThat(subject.getTotalCost(), equalTo(50));
@@ -112,6 +127,15 @@ public class GridVisitorTest {
     public void incrementsColumnAfterVisiting() {
         Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
 
+        subject.visit(grid);
+        assertThat(subject.getCurrentColumn(), equalTo(1));
+    }
+
+    @Test
+    public void doesNotIncrementColumnAfterVisitExceedsMaximumCost() {
+        Grid grid = new Grid(new int[][]{ { GridVisitor.MAXIMUM_COST, 1, 1, 1, 1 } });
+
+        subject.visit(grid);
         subject.visit(grid);
         assertThat(subject.getCurrentColumn(), equalTo(1));
     }
@@ -144,7 +168,7 @@ public class GridVisitorTest {
 
     @Test
     public void isSuccessfulIfGridIsCompletelyTraversed() {
-        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
+        Grid grid = new Grid(new int[][]{ { 1, 1, 1, 1, GridVisitor.MAXIMUM_COST - 4 } });
 
         subject.visit(grid);
         subject.visit(grid);
@@ -168,8 +192,8 @@ public class GridVisitorTest {
     }
 
     @Test
-    public void isNotSuccessfulIfLastVisitCausesTotalCostToExceedMaximum() {
-        Grid grid = new Grid(new int[][]{ { 0, 0, 0, 0, 50 } });
+    public void isNotSuccessfulIfLastVisitCausesTotalCostToExceedMaximumCost() {
+        Grid grid = new Grid(new int[][]{ { 0, 0, 0, 0, GridVisitor.MAXIMUM_COST + 1 } });
 
         subject.visit(grid);
         subject.visit(grid);
