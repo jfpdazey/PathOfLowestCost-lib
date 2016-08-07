@@ -103,14 +103,14 @@ public class GridVisitorTest {
 
     @Test
     public void startsAtColumnZero() {
-        Grid grid = new Grid(new int[][]{ { 1, 1, 1, 1, 1 } });
+        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
 
         assertThat(subject.getCurrentColumn(), equalTo(0));
     }
 
     @Test
     public void incrementsColumnAfterVisiting() {
-        Grid grid = new Grid(new int[][]{ { 1, 1, 1, 1, 1 } });
+        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
 
         subject.visit(grid);
         assertThat(subject.getCurrentColumn(), equalTo(1));
@@ -133,5 +133,50 @@ public class GridVisitorTest {
         subject.visit(grid);
         expectedPath.add(1);
         assertThat(subject.getPath(), equalTo(expectedPath));
+    }
+
+    @Test
+    public void isNotSuccessfulBeforeStarting() {
+        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
+
+        assertThat(subject.isSuccessful(grid), is(false));
+    }
+
+    @Test
+    public void isSuccessfulIfGridIsCompletelyTraversed() {
+        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
+
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+
+        assertThat(subject.isSuccessful(grid), is(true));
+    }
+
+    @Test
+    public void isNotSuccessfulIfGridIsPartiallyTraversed() {
+        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
+
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+
+        assertThat(subject.isSuccessful(grid), is(false));
+    }
+
+    @Test
+    public void isNotSuccessfulIfLastVisitCausesTotalCostToExceedMaximum() {
+        Grid grid = new Grid(new int[][]{ { 0, 0, 0, 0, 50 } });
+
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+        subject.visit(grid);
+
+        assertThat(subject.isSuccessful(grid), is(false));
     }
 }

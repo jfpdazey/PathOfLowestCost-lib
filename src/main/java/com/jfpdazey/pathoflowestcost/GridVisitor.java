@@ -33,4 +33,9 @@ public class GridVisitor {
     public List<Integer> getPath() {
         return path;
     }
+
+    public boolean isSuccessful(Grid grid) {
+        return (path.size() == grid.getColumnCount())
+                && (totalCost < 50);
+    }
 }
