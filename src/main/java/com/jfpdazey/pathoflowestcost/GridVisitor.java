@@ -19,6 +19,10 @@ public class GridVisitor {
         return currentColumn;
     }
 
+    public List<Integer> getPath() {
+        return path;
+    }
+
     public void visit(Grid grid) {
         if (canVisit(grid)) {
             currentColumn++;
@@ -28,16 +32,15 @@ public class GridVisitor {
     }
 
     public boolean canVisit(Grid grid) {
-        return (currentColumn < grid.getColumnCount())
-                && (totalCost + grid.getValueForColumn(currentColumn + 1) <= MAXIMUM_COST);
-    }
-
-    public List<Integer> getPath() {
-        return path;
+        return (currentColumn < grid.getColumnCount()) && !nextVisitWouldExceedMaximumCost(grid);
     }
 
     public boolean isSuccessful(Grid grid) {
         return (path.size() == grid.getColumnCount())
                 && (totalCost <= MAXIMUM_COST);
+    }
+
+    private boolean nextVisitWouldExceedMaximumCost(Grid grid) {
+        return (totalCost + grid.getValueForColumn(currentColumn + 1)) > MAXIMUM_COST;
     }
 }
