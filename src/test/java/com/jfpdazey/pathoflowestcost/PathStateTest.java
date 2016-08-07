@@ -55,4 +55,16 @@ public class PathStateTest {
         subject.addRow(1, 10);
         assertThat(subject.getTotalCost(), equalTo(12));
     }
+
+    @Test
+    public void isOverCostIfCostExceedsMaximum() {
+        subject.addRow(1, PathState.MAXIMUM_COST + 1);
+        assertThat(subject.isOverCost(), is(true));
+    }
+
+    @Test
+    public void isNotOverCostIfCostDoesNotExceedMaximum() {
+        subject.addRow(1, PathState.MAXIMUM_COST);
+        assertThat(subject.isOverCost(), is(false));
+    }
 }

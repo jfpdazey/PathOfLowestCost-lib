@@ -1,11 +1,6 @@
 package com.jfpdazey.pathoflowestcost;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class GridVisitor {
-
-    public static int MAXIMUM_COST = 50;
 
     private Grid grid;
     private int currentColumn;
@@ -39,11 +34,10 @@ public class GridVisitor {
     }
 
     public boolean isSuccessful() {
-        return (pathState.getRowsTraversed().size() == grid.getColumnCount())
-                && (pathState.getTotalCost() <= MAXIMUM_COST);
+        return (pathState.getRowsTraversed().size() == grid.getColumnCount()) && !pathState.isOverCost();
     }
 
     private boolean nextVisitWouldExceedMaximumCost() {
-        return (pathState.getTotalCost() + grid.getValueForColumn(currentColumn + 1)) > MAXIMUM_COST;
+        return (pathState.getTotalCost() + grid.getValueForColumn(currentColumn + 1)) > PathState.MAXIMUM_COST;
     }
 }

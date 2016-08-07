@@ -5,6 +5,8 @@ import java.util.List;
 
 public class PathState {
 
+    public static int MAXIMUM_COST = 50;
+
     public boolean successful = false;
     private List<Integer> rowsTraversed = new ArrayList<Integer>();
     private int totalCost = 0;
@@ -20,5 +22,9 @@ public class PathState {
     public void addRow(int row, int cost) {
         rowsTraversed.add(row);
         totalCost += cost;
+    }
+
+    public boolean isOverCost() {
+        return totalCost > MAXIMUM_COST;
     }
 }
