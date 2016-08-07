@@ -14,8 +14,6 @@ public class GridVisitor {
         this.pathState = new PathState();
     }
 
-    public PathState getPathState() { return pathState; }
-
     public PathState visitPathForRow(int row) {
         while(canVisitRow(row)) {
             visitRow(row);
@@ -24,7 +22,7 @@ public class GridVisitor {
         return pathState;
     }
 
-    public void visitRow(int row) {
+    private void visitRow(int row) {
         if (canVisitRow(row)) {
             int column = pathState.getPathLength() + 1;
             pathState.addRowWithCost(row, grid.getValueForRowAndColumn(row, column));
@@ -32,7 +30,7 @@ public class GridVisitor {
         }
     }
 
-    public boolean canVisitRow(int row) {
+    private boolean canVisitRow(int row) {
         return !pathIsComplete() && !nextVisitWouldExceedMaximumCost(row);
     }
 
