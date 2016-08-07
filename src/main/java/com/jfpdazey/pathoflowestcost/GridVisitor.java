@@ -8,9 +8,7 @@ public class GridVisitor {
     public static int MAXIMUM_COST = 50;
 
     private Grid grid;
-    private int totalCost;
     private int currentColumn;
-    private List<Integer> path;
     private PathState pathState;
 
     public GridVisitor(Grid grid) {
@@ -19,20 +17,11 @@ public class GridVisitor {
         }
 
         this.grid = grid;
-        this.path = new ArrayList<Integer>();
         this.pathState = new PathState();
-    }
-
-    public int getTotalCost() {
-        return totalCost;
     }
 
     public int getCurrentColumn() {
         return currentColumn;
-    }
-
-    public List<Integer> getPath() {
-        return path;
     }
 
     public PathState getPathState() { return pathState; }
@@ -40,8 +29,6 @@ public class GridVisitor {
     public void visit() {
         if (canVisit()) {
             currentColumn++;
-            totalCost += grid.getValueForColumn(currentColumn);
-            path.add(1);
             pathState.addRow(1, grid.getValueForColumn(currentColumn));
             pathState.successful = isSuccessful();
         }
@@ -52,11 +39,11 @@ public class GridVisitor {
     }
 
     public boolean isSuccessful() {
-        return (path.size() == grid.getColumnCount())
-                && (totalCost <= MAXIMUM_COST);
+        return (pathState.getRowsTraversed().size() == grid.getColumnCount())
+                && (pathState.getTotalCost() <= MAXIMUM_COST);
     }
 
     private boolean nextVisitWouldExceedMaximumCost() {
-        return (totalCost + grid.getValueForColumn(currentColumn + 1)) > MAXIMUM_COST;
+        return (pathState.getTotalCost() + grid.getValueForColumn(currentColumn + 1)) > MAXIMUM_COST;
     }
 }
