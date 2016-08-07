@@ -127,33 +127,6 @@ public class GridVisitorTest {
     }
 
     @Test
-    public void startsAtColumnZero() {
-        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
-        GridVisitor subject = new GridVisitor(grid);
-
-        assertThat(subject.getCurrentColumn(), equalTo(0));
-    }
-
-    @Test
-    public void incrementsColumnAfterVisiting() {
-        Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
-        GridVisitor subject = new GridVisitor(grid);
-
-        subject.visitRow(1);
-        assertThat(subject.getCurrentColumn(), equalTo(1));
-    }
-
-    @Test
-    public void doesNotIncrementColumnAfterVisitExceedsMaximumCost() {
-        Grid grid = new Grid(new int[][]{ { PathState.MAXIMUM_COST, 1, 1, 1, 1 } });
-        GridVisitor subject = new GridVisitor(grid);
-
-        subject.visitRow(1);
-        subject.visitRow(1);
-        assertThat(subject.getCurrentColumn(), equalTo(1));
-    }
-
-    @Test
     public void startsWithEmptyPath() {
         Grid grid = new Grid(new int[][]{ { 2, 2, 2, 2, 2 } });
         GridVisitor subject = new GridVisitor(grid);

@@ -35,6 +35,11 @@ public class PathStateTest {
     }
 
     @Test
+    public void beginsWithPathLengthOfZero() {
+        assertThat(subject.getPathLength(), equalTo(0));
+    }
+
+    @Test
     public void returnsRowsAdded() {
         List<Integer> expectedRows = new ArrayList<Integer>();
 
@@ -66,5 +71,14 @@ public class PathStateTest {
     public void isNotOverCostIfCostDoesNotExceedMaximum() {
         subject.addRow(1, PathState.MAXIMUM_COST);
         assertThat(subject.isOverCost(), is(false));
+    }
+
+    @Test
+    public void returnsPathLengthAfterAddingRows() {
+        subject.addRow(2, 1);
+        assertThat(subject.getPathLength(), equalTo(1));
+
+        subject.addRow(1, 10);
+        assertThat(subject.getPathLength(), equalTo(2));
     }
 }
