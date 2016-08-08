@@ -2,7 +2,17 @@
 This is a standalone Java library created to support the Path Of Lowest Cost kata. See below for more details on the kata.
 
 ##Build/test
-Gradle stuff...
+The library uses Gradle.  After cloning, you can run various tasks:
+* `./gradlew test` to test
+* `./gradlew build` to build
+* `./gradlew jar` to archive the library
+
+Of course, you can always import it into your editor of choice...
+
+##Integration
+If this library requires updating or will be copied into another project: after archiving the library per the instructions above, copy it from the `build/libs` directory into the destination.
+
+For the Android project, the destination will be the `libs` directory.
 
 ##The kata
 ###The Challenge
