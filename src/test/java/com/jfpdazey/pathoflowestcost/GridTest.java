@@ -121,4 +121,18 @@ public class GridTest {
 
         assertThat(fourRowGrid.getRowsAdjacentTo(1), equalTo(expectedRows));
     }
+
+    @Test
+    public void asDelimitedStringOutputsValuesForARowSeparatedByChosenDelimiter() {
+        Grid oneRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
+
+        assertThat(oneRowGrid.asDelimitedString("|"), equalTo("1|2|3|4|5"));
+    }
+
+    @Test
+    public void asDelimitedStringOutputsValuesForMultipleRowsWithTrailingLineBreaks() {
+        Grid twoRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 4, 6, 8, 10 } });
+
+        assertThat(twoRowGrid.asDelimitedString("\t"), equalTo("1\t2\t3\t4\t5\n2\t4\t6\t8\t10"));
+    }
 }

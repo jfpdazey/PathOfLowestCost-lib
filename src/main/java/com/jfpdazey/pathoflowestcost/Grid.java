@@ -42,6 +42,24 @@ public class Grid {
         return new ArrayList<Integer>(adjacentRows);
     }
 
+    public String asDelimitedString(String delimiter) {
+        StringBuilder builder = new StringBuilder();
+
+        for (int row = 0; row < values.length; row++) {
+            for (int column = 0; column < values[row].length; column++) {
+                builder.append(values[row][column]);
+                if (column < values[row].length - 1) {
+                    builder.append(delimiter);
+                }
+            }
+            if (row < values.length - 1) {
+                builder.append("\n");
+            }
+        }
+
+        return builder.toString();
+    }
+
     private boolean isValidRowNumber(int rowNumber) {
         return (rowNumber > 0) && (rowNumber <= values.length);
     }
