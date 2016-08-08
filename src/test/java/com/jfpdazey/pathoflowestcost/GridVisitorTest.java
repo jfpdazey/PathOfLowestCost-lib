@@ -202,6 +202,22 @@ public class GridVisitorTest {
     }
 
     @Test
+    public void visitPathsForRowReturnsLongerPathsAheadOfShorterPathsWithLowerCost() {
+        Grid twoRowGrid = new Grid(new int[][]{
+                { 1, 1, PathState.MAXIMUM_COST, PathState.MAXIMUM_COST, 1 },
+                { 1, 10, 10, PathState.MAXIMUM_COST, 5 } });
+        GridVisitor subject = new GridVisitor(twoRowGrid);
+        List<Integer> expectedPath = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 1, 1, 2 })
+        );
+
+        List<PathState> results = subject.visitPathsForRow(1);
+
+        assertThat(results.get(0).getTotalCost(), equalTo(12));
+        assertThat(results.get(0).getRowsTraversed(), equalTo(expectedPath));
+    }
+
+    @Test
     public void visitPathsForRowReturnsAllPathsFromThatRowThroughFullThreeRowGrid() {
         Grid threeRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 0, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 } });
         GridVisitor subject = new GridVisitor(threeRowGrid);
@@ -243,7 +259,6 @@ public class GridVisitorTest {
         assertThat(results.size(), equalTo(324));
     }
 
-
     @Test
     public void visitPathsForAllRowsReturnsPathsInAscendingCostOrder() {
         Grid fourRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4 } });
@@ -258,5 +273,21 @@ public class GridVisitorTest {
 
         assertThat(results.get(0).getTotalCost(), equalTo(8));
         assertThat(results.get(323).getTotalCost(), equalTo(21));
+    }
+
+    @Test
+    public void visitPathsForAllRowsReturnsLongerPathsAheadOfShorterPathsWithLowerCost() {
+        Grid twoRowGrid = new Grid(new int[][]{
+                { 2, 1, PathState.MAXIMUM_COST, PathState.MAXIMUM_COST, 1 },
+                { 1, 10, 10, PathState.MAXIMUM_COST, 5 } });
+        GridVisitor subject = new GridVisitor(twoRowGrid);
+        List<Integer> expectedPath = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 2, 1, 2 })
+        );
+
+        List<PathState> results = subject.visitPathsForAllRows();
+
+        assertThat(results.get(0).getTotalCost(), equalTo(12));
+        assertThat(results.get(0).getRowsTraversed(), equalTo(expectedPath));
     }
 }
