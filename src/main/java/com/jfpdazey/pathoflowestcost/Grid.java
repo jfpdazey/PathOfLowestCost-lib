@@ -1,5 +1,8 @@
 package com.jfpdazey.pathoflowestcost;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Grid {
     int[][] values;
 
@@ -19,5 +22,22 @@ public class Grid {
 
     public int getColumnCount() {
         return values[0].length;
+    }
+
+    public List<Integer> getRowsAdjacentTo(int rowNumber) {
+        List<Integer> adjacentRows = new ArrayList<Integer>();
+
+        if (isValidRowNumber(rowNumber)) {
+            adjacentRows.add(1);
+            if (values.length > 1) {
+                adjacentRows.add(2);
+            }
+        }
+
+        return adjacentRows;
+    }
+
+    private boolean isValidRowNumber(int rowNumber) {
+        return rowNumber > 0 && rowNumber <= values.length;
     }
 }

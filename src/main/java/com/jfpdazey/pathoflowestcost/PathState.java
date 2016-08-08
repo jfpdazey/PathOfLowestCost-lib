@@ -15,6 +15,14 @@ public class PathState {
         this.expectedLength = expectedLength;
     }
 
+    PathState(PathState anotherPathState) {
+        this.totalCost = anotherPathState.totalCost;
+        this.expectedLength = anotherPathState.expectedLength;
+        for (int rowTraversed : anotherPathState.rowsTraversed) {
+            this.rowsTraversed.add(rowTraversed);
+        }
+    }
+
     public List<Integer> getRowsTraversed() {
         return rowsTraversed;
     }

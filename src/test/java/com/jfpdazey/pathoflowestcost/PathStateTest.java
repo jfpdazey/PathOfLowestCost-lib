@@ -111,4 +111,33 @@ public class PathStateTest {
         subject.addRowWithCost(2, 1);
         assertThat(subject.isSuccessful(), is(false));
     }
+
+    @Test
+    public void copyConstructorMakesAnExactCopyOfPath() {
+        subject.addRowWithCost(1, 10);
+        subject.addRowWithCost(2, 10);
+        List<Integer> expectedRows = new ArrayList<Integer>();
+        expectedRows.add(1);
+        expectedRows.add(2);
+
+        PathState copy = new PathState(subject);
+
+        assertThat(copy.getTotalCost(), equalTo(20));
+        assertThat(copy.getRowsTraversed(), equalTo(expectedRows));
+        assertThat(copy.isComplete(), is(true));
+    }
+
+    @Test
+    public void copyConstructorMakesAnIndependentCopyOfPath() {
+        subject.addRowWithCost(1, 10);
+        List<Integer> expectedRows = new ArrayList<Integer>();
+        expectedRows.add(1);
+
+        PathState copy = new PathState(subject);
+        subject.addRowWithCost(2, 10);
+
+        assertThat(copy.getTotalCost(), equalTo(10));
+        assertThat(copy.getRowsTraversed(), equalTo(expectedRows));
+        assertThat(copy.isComplete(), is(false));
+    }
 }

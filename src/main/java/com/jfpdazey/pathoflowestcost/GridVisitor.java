@@ -17,7 +17,8 @@ public class GridVisitor {
 
     public List<PathState> visitPathsForRow(int row) {
         PathState initialPath = new PathState(grid.getColumnCount());
-        return visitPathsForRow(row, initialPath);
+        List<PathState> paths = visitPathsForRow(row, initialPath);
+        return paths;
     }
 
     private List<PathState> visitPathsForRow(int row, PathState path) {
@@ -25,9 +26,19 @@ public class GridVisitor {
 
         if (canVisitRowOnPath(row, path)) {
             visitRowOnPath(row, path);
-            paths.addAll(visitPathsForRow(row, path));
-        } else {
-            paths.add(path);
+        }
+
+        List<Integer> adjacentRows = grid.getRowsAdjacentTo(row);
+        boolean currentPathAdded = false;
+
+        for (int adjacentRow : adjacentRows) {
+            if (canVisitRowOnPath(row, path)) {
+                PathState pathCopy = new PathState(path);
+                paths.addAll(visitPathsForRow(adjacentRow, pathCopy));
+            } else if (!currentPathAdded) {
+                currentPathAdded = true;
+                paths.add(path);
+            }
         }
 
         return paths;

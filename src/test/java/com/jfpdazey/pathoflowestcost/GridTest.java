@@ -36,4 +36,30 @@ public class GridTest {
         assertThat(fiveColumnGrid.getColumnCount(), equalTo(5));
         assertThat(sevenColumnGrid.getColumnCount(), equalTo(7));
     }
+
+    @Test
+    public void getAdjacentRowsReturnsOneWhenOnlyOneRow() {
+        Grid oneRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
+        assertThat(oneRowGrid.getRowsAdjacentTo(1).size(), equalTo(1));
+        assertThat(oneRowGrid.getRowsAdjacentTo(1).get(0), equalTo(1));
+    }
+
+    @Test
+    public void getAdjacentRowsReturnsNothingWhenInvalidRowIsPassed() {
+        Grid oneRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
+        assertThat(oneRowGrid.getRowsAdjacentTo(0).size(), equalTo(0));
+        assertThat(oneRowGrid.getRowsAdjacentTo(2).size(), equalTo(0));
+    }
+
+    @Test
+    public void getAdjacentRowsReturnsBothOneAndTwoWhenTwoRows() {
+        Grid twoRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 4, 6, 8, 10 } });
+        assertThat(twoRowGrid.getRowsAdjacentTo(1).size(), equalTo(2));
+        assertThat(twoRowGrid.getRowsAdjacentTo(1).get(0), equalTo(1));
+        assertThat(twoRowGrid.getRowsAdjacentTo(1).get(1), equalTo(2));
+
+        assertThat(twoRowGrid.getRowsAdjacentTo(2).size(), equalTo(2));
+        assertThat(twoRowGrid.getRowsAdjacentTo(2).get(0), equalTo(1));
+        assertThat(twoRowGrid.getRowsAdjacentTo(2).get(1), equalTo(2));
+    }
 }

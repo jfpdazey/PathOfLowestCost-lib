@@ -139,12 +139,12 @@ public class GridVisitorTest {
         Grid twoRowGrid = new Grid(new int[][]{ { 5, 5, 5, 5, 5 }, { 1, 2, 3, 4, 5 } });
         GridVisitor subject = new GridVisitor(twoRowGrid);
         List<Integer> expectedPath = new ArrayList<Integer>(
-                Arrays.asList(new Integer[]{ 2, 2, 2, 2, 2 })
+                Arrays.asList(new Integer[]{ 2, 1, 1, 1, 1 })
         );
 
         PathState result = subject.visitPathsForRow(2).get(0);
 
-        assertThat(result.getTotalCost(), equalTo(15));
+        assertThat(result.getTotalCost(), equalTo(21));
         assertThat(result.getRowsTraversed(), equalTo(expectedPath));
         assertThat(result.isSuccessful(), is(true));
     }
@@ -164,13 +164,13 @@ public class GridVisitorTest {
         assertThat(result.isSuccessful(), is(false));
     }
 
-//    @Test
-//    public void visitPathForOneRowReturnsAllPossiblePathsThroughTwoRowGrid() {
-//        Grid twoRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 0, 2, 1, 1, 1 } });
-//        GridVisitor subject = new GridVisitor(twoRowGrid);
-//
-//        List<PathState> results = subject.visitPathsForRow(1);
-//
-//        assertThat(results.size(), equalTo(16));
-//    }
+    @Test
+    public void visitPathsForRowReturnsAllPathsFromThatRowThroughFullTwoRowGrid() {
+        Grid twoRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 0, 2, 1, 1, 1 } });
+        GridVisitor subject = new GridVisitor(twoRowGrid);
+
+        List<PathState> results = subject.visitPathsForRow(1);
+
+        assertThat(results.size(), equalTo(16));
+    }
 }
