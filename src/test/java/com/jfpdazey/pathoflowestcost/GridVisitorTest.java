@@ -232,4 +232,14 @@ public class GridVisitorTest {
         assertThat(results.size(), equalTo(81));
         assertThat(results.get(0).getTotalCost(), equalTo(9));
     }
+
+    @Test
+    public void visitPathsForAllRowsReturnsAllPossiblePathsForAllRowsThroughFullFourRowGrid() {
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4 } });
+        GridVisitor subject = new GridVisitor(fourRowGrid);
+
+        List<PathState> results = subject.visitPathsForAllRows();
+
+        assertThat(results.size(), equalTo(324));
+    }
 }

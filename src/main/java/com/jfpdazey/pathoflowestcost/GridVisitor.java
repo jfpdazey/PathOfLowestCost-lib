@@ -18,6 +18,15 @@ public class GridVisitor {
         pathComparator = new PathStateComparator();
     }
 
+    public List<PathState> visitPathsForAllRows() {
+        List<PathState> allPaths = new ArrayList<PathState>();
+        for (int row = 1; row <= grid.getRowCount(); row++) {
+            allPaths.addAll(visitPathsForRow(row));
+        }
+
+        return allPaths;
+    }
+
     public List<PathState> visitPathsForRow(int row) {
         PathState initialPath = new PathState(grid.getColumnCount());
         List<PathState> paths = visitPathsForRow(row, initialPath);

@@ -22,6 +22,10 @@ public class Grid {
         return values[row - 1][column - 1];
     }
 
+    public int getRowCount() {
+        return values.length;
+    }
+
     public int getColumnCount() {
         return values[0].length;
     }

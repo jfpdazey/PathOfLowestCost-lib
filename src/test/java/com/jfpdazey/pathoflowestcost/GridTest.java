@@ -45,6 +45,15 @@ public class GridTest {
     }
 
     @Test
+    public void returnsRowCount() {
+        Grid twoRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 1, 2, 3, 4, 5 } });
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 1, 2, 3, 4, 5 }, { 1, 2, 3, 4, 5 }, { 1, 2, 3, 4, 5 } });
+
+        assertThat(twoRowGrid.getRowCount(), equalTo(2));
+        assertThat(fourRowGrid.getRowCount(), equalTo(4));
+    }
+
+    @Test
     public void returnsColumnCount() {
         Grid fiveColumnGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
         Grid sevenColumnGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5, 6, 7 } });
