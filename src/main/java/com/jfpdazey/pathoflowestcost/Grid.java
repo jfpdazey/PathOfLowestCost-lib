@@ -9,10 +9,10 @@ public class Grid {
     int[][] values;
 
     Grid(int[][] values) {
-        if (values.length < 1) {
-            throw new IllegalArgumentException("At least one row of values is expected");
-        } else if (values[0].length < 5) {
-            throw new IllegalArgumentException("At least five columns of values are expected");
+        if (values.length < 1 || values.length > 10) {
+            throw new IllegalArgumentException("Between one and ten rows of values are expected");
+        } else if (values[0].length < 5 || values[0].length > 100) {
+            throw new IllegalArgumentException("Between five and one hundred columns of values are expected");
         }
 
         this.values = values;

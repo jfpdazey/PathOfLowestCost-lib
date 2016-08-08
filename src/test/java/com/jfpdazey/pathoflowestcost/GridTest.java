@@ -18,8 +18,20 @@ public class GridTest {
     }
 
     @Test(expected = IllegalArgumentException.class)
+    public void aGridRequiresTenOrFewerRows() {
+        int values[][] = new int[11][5];
+        Grid subject = new Grid(values);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
     public void aGridRequiresAtLeastFiveColumns() {
         int values[][] = new int[1][4];
+        Grid subject = new Grid(values);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void aGridRequiresOneHundredOrFewerColumns() {
+        int values[][] = new int[1][101];
         Grid subject = new Grid(values);
     }
 
