@@ -44,8 +44,11 @@ public class GridTest {
     @Test
     public void getAdjacentRowsReturnsOneWhenOnlyOneRow() {
         Grid oneRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 } });
-        assertThat(oneRowGrid.getRowsAdjacentTo(1).size(), equalTo(1));
-        assertThat(oneRowGrid.getRowsAdjacentTo(1).get(0), equalTo(1));
+        List<Integer> expectedRows = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 1 })
+        );
+
+        assertThat(oneRowGrid.getRowsAdjacentTo(1), equalTo(expectedRows));
     }
 
     @Test
@@ -58,13 +61,12 @@ public class GridTest {
     @Test
     public void getAdjacentRowsReturnsBothOneAndTwoWhenTwoRows() {
         Grid twoRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 4, 6, 8, 10 } });
-        assertThat(twoRowGrid.getRowsAdjacentTo(1).size(), equalTo(2));
-        assertThat(twoRowGrid.getRowsAdjacentTo(1).get(0), equalTo(1));
-        assertThat(twoRowGrid.getRowsAdjacentTo(1).get(1), equalTo(2));
+        List<Integer> expectedRows = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 1, 2 })
+        );
 
-        assertThat(twoRowGrid.getRowsAdjacentTo(2).size(), equalTo(2));
-        assertThat(twoRowGrid.getRowsAdjacentTo(2).get(0), equalTo(1));
-        assertThat(twoRowGrid.getRowsAdjacentTo(2).get(1), equalTo(2));
+        assertThat(twoRowGrid.getRowsAdjacentTo(1), equalTo(expectedRows));
+        assertThat(twoRowGrid.getRowsAdjacentTo(2), equalTo(expectedRows));
     }
 
     @Test
@@ -77,5 +79,25 @@ public class GridTest {
         assertThat(threeRowGrid.getRowsAdjacentTo(1), equalTo(expectedRows));
         assertThat(threeRowGrid.getRowsAdjacentTo(2), equalTo(expectedRows));
         assertThat(threeRowGrid.getRowsAdjacentTo(3), equalTo(expectedRows));
+    }
+
+    @Test
+    public void getAdjacentRowsReturnsNeighboringRowsWhenMoreThanThreeRows() {
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 1, 1, 1, 1 }, { 2, 2, 2, 2, 2 }, { 3, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4 } });
+        List<Integer> expectedRows = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 2, 3, 4 })
+        );
+
+        assertThat(fourRowGrid.getRowsAdjacentTo(3), equalTo(expectedRows));
+    }
+
+    @Test
+    public void getAdjacentRowsReturnsWrappedRowsWhenMoreThanThreeRows() {
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 1, 1, 1, 1 }, { 2, 2, 2, 2, 2 }, { 3, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4 } });
+        List<Integer> expectedRows = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 1, 2, 4 })
+        );
+
+        assertThat(fourRowGrid.getRowsAdjacentTo(1), equalTo(expectedRows));
     }
 }

@@ -211,4 +211,25 @@ public class GridVisitorTest {
         assertThat(results.size(), equalTo(81));
         assertThat(results.get(0).getTotalCost(), equalTo(9));
     }
+
+    @Test
+    public void visitPathsForRowCanWrapToFourthRowInFullFourRowGrid() {
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 5, 5, 5, 5 }, { 0, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 }, { 0, 1, 1, 1, 1 } });
+        GridVisitor subject = new GridVisitor(fourRowGrid);
+
+        List<PathState> results = subject.visitPathsForRow(1);
+
+        assertThat(results.get(0).getTotalCost(), equalTo(5));
+    }
+
+    @Test
+    public void visitPathsForRowReturnsAllPossiblePathsFromThatRowThroughFullFourRowGrid() {
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 0, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 }, { 0, 4, 4, 4, 4 } });
+        GridVisitor subject = new GridVisitor(fourRowGrid);
+
+        List<PathState> results = subject.visitPathsForRow(1);
+
+        assertThat(results.size(), equalTo(81));
+        assertThat(results.get(0).getTotalCost(), equalTo(9));
+    }
 }

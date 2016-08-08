@@ -1,7 +1,9 @@
 package com.jfpdazey.pathoflowestcost;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Grid {
     int[][] values;
@@ -25,22 +27,28 @@ public class Grid {
     }
 
     public List<Integer> getRowsAdjacentTo(int rowNumber) {
-        List<Integer> adjacentRows = new ArrayList<Integer>();
+        Set<Integer> adjacentRows = new HashSet<Integer>();
 
         if (isValidRowNumber(rowNumber)) {
-            adjacentRows.add(1);
-            if (values.length == 2) {
-                adjacentRows.add(2);
-            } else if (values.length > 2) {
-                adjacentRows.add(2);
-                adjacentRows.add(3);
-            }
+            adjacentRows.add(rowNumber);
+            adjacentRows.add(getRowAbove(rowNumber));
+            adjacentRows.add(getRowBelow(rowNumber));
         }
 
-        return adjacentRows;
+        return new ArrayList<Integer>(adjacentRows);
     }
 
     private boolean isValidRowNumber(int rowNumber) {
-        return rowNumber > 0 && rowNumber <= values.length;
+        return (rowNumber > 0) && (rowNumber <= values.length);
+    }
+
+    private int getRowAbove(int rowNumber) {
+        int potentialRowNumber = rowNumber - 1;
+        return (potentialRowNumber < 1) ? values.length : potentialRowNumber;
+    }
+
+    private int getRowBelow(int rowNumber) {
+        int potentialRowNumber = rowNumber + 1;
+        return (potentialRowNumber > values.length) ? 1 : potentialRowNumber;
     }
 }
