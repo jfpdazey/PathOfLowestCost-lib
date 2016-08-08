@@ -1,11 +1,13 @@
 package com.jfpdazey.pathoflowestcost;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class GridVisitor {
 
     private Grid grid;
+    private PathStateComparator pathComparator;
 
     public GridVisitor(Grid grid) {
         if (grid == null) {
@@ -13,11 +15,14 @@ public class GridVisitor {
         }
 
         this.grid = grid;
+        pathComparator = new PathStateComparator();
     }
 
     public List<PathState> visitPathsForRow(int row) {
         PathState initialPath = new PathState(grid.getColumnCount());
         List<PathState> paths = visitPathsForRow(row, initialPath);
+        Collections.sort(paths, pathComparator);
+
         return paths;
     }
 
