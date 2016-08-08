@@ -12,7 +12,7 @@ Of course, you can always import it into your editor of choice...
 ##Integration
 If this library requires updating or will be copied into another project: after archiving the library per the instructions above, copy it from the `build/libs` directory into the destination.
 
-For the Android project, the destination will be the `libs` directory.
+For the Android project, the destination will be the `app/libs` directory.
 
 ##The kata
 ###The Challenge
