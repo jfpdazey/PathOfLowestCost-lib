@@ -29,8 +29,11 @@ public class Grid {
 
         if (isValidRowNumber(rowNumber)) {
             adjacentRows.add(1);
-            if (values.length > 1) {
+            if (values.length == 2) {
                 adjacentRows.add(2);
+            } else if (values.length > 2) {
+                adjacentRows.add(2);
+                adjacentRows.add(3);
             }
         }
 

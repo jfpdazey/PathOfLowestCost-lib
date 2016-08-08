@@ -2,6 +2,10 @@ package com.jfpdazey.pathoflowestcost;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
 
@@ -61,5 +65,17 @@ public class GridTest {
         assertThat(twoRowGrid.getRowsAdjacentTo(2).size(), equalTo(2));
         assertThat(twoRowGrid.getRowsAdjacentTo(2).get(0), equalTo(1));
         assertThat(twoRowGrid.getRowsAdjacentTo(2).get(1), equalTo(2));
+    }
+
+    @Test
+    public void getAdjacentRowsReturnsOneThroughThreeWhenThreeRows() {
+        Grid threeRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 4, 6, 8, 10 }, { 3, 6, 9, 12, 15 } });
+        List<Integer> expectedRows = new ArrayList<Integer>(
+                Arrays.asList(new Integer[]{ 1, 2, 3 })
+        );
+
+        assertThat(threeRowGrid.getRowsAdjacentTo(1), equalTo(expectedRows));
+        assertThat(threeRowGrid.getRowsAdjacentTo(2), equalTo(expectedRows));
+        assertThat(threeRowGrid.getRowsAdjacentTo(3), equalTo(expectedRows));
     }
 }

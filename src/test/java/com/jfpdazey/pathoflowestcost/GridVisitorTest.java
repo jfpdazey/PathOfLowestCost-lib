@@ -200,4 +200,15 @@ public class GridVisitorTest {
         assertThat(results.get(0).getTotalCost(), equalTo(5));
         assertThat(results.get(15).getTotalCost(), equalTo(15));
     }
+
+    @Test
+    public void visitPathsForRowReturnsAllPathsFromThatRowThroughFullThreeRowGrid() {
+        Grid threeRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 0, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 } });
+        GridVisitor subject = new GridVisitor(threeRowGrid);
+
+        List<PathState> results = subject.visitPathsForRow(1);
+
+        assertThat(results.size(), equalTo(81));
+        assertThat(results.get(0).getTotalCost(), equalTo(9));
+    }
 }
