@@ -23,6 +23,7 @@ public class GridVisitor {
         for (int row = 1; row <= grid.getRowCount(); row++) {
             allPaths.addAll(visitPathsForRow(row));
         }
+        Collections.sort(allPaths, pathComparator);
 
         return allPaths;
     }
@@ -46,7 +47,7 @@ public class GridVisitor {
         boolean currentPathAdded = false;
 
         for (int adjacentRow : adjacentRows) {
-            if (canVisitRowOnPath(row, path)) {
+            if (canVisitRowOnPath(adjacentRow, path)) {
                 PathState pathCopy = new PathState(path);
                 paths.addAll(visitPathsForRow(adjacentRow, pathCopy));
             } else if (!currentPathAdded) {

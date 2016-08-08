@@ -242,4 +242,21 @@ public class GridVisitorTest {
 
         assertThat(results.size(), equalTo(324));
     }
+
+
+    @Test
+    public void visitPathsForAllRowsReturnsPathsInAscendingCostOrder() {
+        Grid fourRowGrid = new Grid(new int[][]{ { 1, 2, 3, 4, 5 }, { 2, 2, 2, 2, 2 }, { 0, 3, 3, 3, 3 }, { 4, 4, 4, 4, 4 } });
+        GridVisitor subject = new GridVisitor(fourRowGrid);
+
+        List<PathState> results = subject.visitPathsForAllRows();
+
+        int priorCost = results.get(0).getTotalCost();
+        for (int i = 1; i < results.size(); i++) {
+            assertThat(priorCost, lessThanOrEqualTo(results.get(i).getTotalCost()));
+        }
+
+        assertThat(results.get(0).getTotalCost(), equalTo(8));
+        assertThat(results.get(323).getTotalCost(), equalTo(21));
+    }
 }
