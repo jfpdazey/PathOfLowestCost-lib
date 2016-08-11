@@ -75,4 +75,34 @@ public class GridIntegrationTest {
         assertThat(solution.getTotalCost(), equalTo(48));
         assertThat(solution.getRowsTraversed(), equalTo(expectedPath));
     }
+
+    @Test
+    public void findsPathThroughMaximumGrid() {
+        int[][] gridArray = new int[10][100];
+        for (int row = 0; row < gridArray.length; row++) {
+            for (int column = 0; column < gridArray[0].length; column++) {
+                if (row == 5 && column % 2 == 0) {
+                    gridArray[row][column] = 1;
+                } else if (row == 5) {
+                    gridArray[row][column] = 0;
+                } else {
+                    gridArray[row][column] = 100;
+                }
+            }
+        }
+        Integer[] expectedPathArray = new Integer[100];
+        for (int row = 0; row < expectedPathArray.length; row++) {
+            expectedPathArray[row] = 6;
+        }
+
+        Grid grid = new Grid(gridArray);
+        GridVisitor visitor = new GridVisitor(grid);
+        List<Integer> expectedPath = new ArrayList<Integer>(Arrays.asList(expectedPathArray));
+
+        List<PathState> results = visitor.visitPathsForAllRows();
+
+        PathState solution = results.get(0);
+        assertThat(solution.isSuccessful(), is(true));
+        assertThat(solution.getTotalCost(), equalTo(50));
+   }
 }
