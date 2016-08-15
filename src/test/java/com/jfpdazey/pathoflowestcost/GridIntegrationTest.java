@@ -1,5 +1,6 @@
 package com.jfpdazey.pathoflowestcost;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -86,7 +87,7 @@ public class GridIntegrationTest {
                 } else if (row == 5) {
                     gridArray[row][column] = 0;
                 } else {
-                    gridArray[row][column] = 100;
+                    gridArray[row][column] = 25;
                 }
             }
         }
@@ -104,5 +105,23 @@ public class GridIntegrationTest {
         PathState solution = results.get(0);
         assertThat(solution.isSuccessful(), is(true));
         assertThat(solution.getTotalCost(), equalTo(50));
-   }
+        assertThat(solution.getRowsTraversed(), equalTo(expectedPath));
+    }
+
+    @Ignore
+    @Test
+    public void findsPathThroughGridTestedOnTheDevice() throws Exception {
+        int[][] gridArray = new int[][] {
+                { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3 },
+                { 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }
+        };
+
+        Grid grid = new Grid(gridArray);
+        GridVisitor visitor = new GridVisitor(grid);
+        List<PathState> results = visitor.visitPathsForAllRows();
+
+        PathState solution = results.get(0);
+        assertThat(solution.isSuccessful(), is(true));
+        assertThat(solution.getTotalCost(), equalTo(1));
+    }
 }
