@@ -8,7 +8,7 @@ public class GridVisitor {
 
     private Grid grid;
     private PathStateComparator pathComparator;
-    private List<PathState> currentPathsForRow;
+    private PathStateCollector pathCollector;
 
     public GridVisitor(Grid grid) {
         if (grid == null) {
@@ -19,24 +19,23 @@ public class GridVisitor {
         pathComparator = new PathStateComparator();
     }
 
-    public List<PathState> visitPathsForAllRows() {
+    public PathState getBestPathForAllRows() {
         List<PathState> allPaths = new ArrayList<PathState>();
         for (int row = 1; row <= grid.getRowCount(); row++) {
-            allPaths.addAll(visitPathsForRow(row));
+            allPaths.add(getBestPathForRow(row));
         }
         Collections.sort(allPaths, pathComparator);
 
-        return allPaths;
+        return allPaths.get(0);
     }
 
-    public List<PathState> visitPathsForRow(int row) {
-        currentPathsForRow = new ArrayList<PathState>();
+    public PathState getBestPathForRow(int row) {
+        pathCollector = new PathStateCollector();
         PathState initialPath = new PathState(grid.getColumnCount());
 
         visitPathsForRow(row, initialPath);
-        Collections.sort(currentPathsForRow, pathComparator);
 
-        return currentPathsForRow;
+        return pathCollector.getBestPath();
     }
 
     private void visitPathsForRow(int row, PathState path) {
@@ -51,9 +50,8 @@ public class GridVisitor {
             if (canVisitRowOnPath(adjacentRow, path)) {
                 PathState pathCopy = new PathState(path);
                 visitPathsForRow(adjacentRow, pathCopy);
-            } else if (!currentPathAdded) {
-                currentPathAdded = true;
-                currentPathsForRow.add(path);
+            } else {
+                pathCollector.addPath(path);
             }
         }
     }

@@ -1,6 +1,5 @@
 package com.jfpdazey.pathoflowestcost;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -27,9 +26,7 @@ public class GridIntegrationTest {
                 Arrays.asList(new Integer[]{ 1, 2, 3, 4, 4, 5 })
         );
 
-        List<PathState> results = visitor.visitPathsForAllRows();
-
-        PathState solution = results.get(0);
+        PathState solution = visitor.getBestPathForAllRows();
         assertThat(solution.isSuccessful(), is(true));
         assertThat(solution.getTotalCost(), equalTo(16));
         assertThat(solution.getRowsTraversed(), equalTo(expectedPath));
@@ -49,9 +46,7 @@ public class GridIntegrationTest {
                 Arrays.asList(new Integer[]{ 1, 2, 1, 5, 4, 5 })
         );
 
-        List<PathState> results = visitor.visitPathsForAllRows();
-
-        PathState solution = results.get(0);
+        PathState solution = visitor.getBestPathForAllRows();
         assertThat(solution.isSuccessful(), is(true));
         assertThat(solution.getTotalCost(), equalTo(11));
         assertThat(solution.getRowsTraversed(), equalTo(expectedPath));
@@ -69,9 +64,7 @@ public class GridIntegrationTest {
                 Arrays.asList(new Integer[]{ 1, 1, 1 })
         );
 
-        List<PathState> results = visitor.visitPathsForAllRows();
-
-        PathState solution = results.get(0);
+        PathState solution = visitor.getBestPathForAllRows();
         assertThat(solution.isSuccessful(), is(false));
         assertThat(solution.getTotalCost(), equalTo(48));
         assertThat(solution.getRowsTraversed(), equalTo(expectedPath));
@@ -100,15 +93,12 @@ public class GridIntegrationTest {
         GridVisitor visitor = new GridVisitor(grid);
         List<Integer> expectedPath = new ArrayList<Integer>(Arrays.asList(expectedPathArray));
 
-        List<PathState> results = visitor.visitPathsForAllRows();
-
-        PathState solution = results.get(0);
+        PathState solution = visitor.getBestPathForAllRows();
         assertThat(solution.isSuccessful(), is(true));
         assertThat(solution.getTotalCost(), equalTo(50));
         assertThat(solution.getRowsTraversed(), equalTo(expectedPath));
     }
 
-    @Ignore
     @Test
     public void findsPathThroughGridTestedOnTheDevice() throws Exception {
         int[][] gridArray = new int[][] {
@@ -118,9 +108,8 @@ public class GridIntegrationTest {
 
         Grid grid = new Grid(gridArray);
         GridVisitor visitor = new GridVisitor(grid);
-        List<PathState> results = visitor.visitPathsForAllRows();
 
-        PathState solution = results.get(0);
+        PathState solution = visitor.getBestPathForAllRows();
         assertThat(solution.isSuccessful(), is(true));
         assertThat(solution.getTotalCost(), equalTo(1));
     }
